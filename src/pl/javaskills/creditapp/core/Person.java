@@ -1,22 +1,20 @@
 package pl.javaskills.creditapp.core;
 
 public class Person {
-
     private final String name;
     private final String lastName;
     private final String mothersMaidenName;
     private final double totalMonthlyIncomeInPln;
     private final boolean married;
-    private final int numOfFamilyDependants;
+    private final int numOfDependants;
 
-
-    public Person(String name, String lastName, String mothersMaidenName, double totalMonthlyIncomeInPln, boolean married, int numOfFamilyDependants) {
+    public Person(String name, String lastName, String mothersMaidenName,double totalMonthlyIncomeInPln,boolean married,int numOfDependants) {
         this.name = name;
         this.lastName = lastName;
         this.mothersMaidenName = mothersMaidenName;
         this.totalMonthlyIncomeInPln = totalMonthlyIncomeInPln;
         this.married = married;
-        this.numOfFamilyDependants = numOfFamilyDependants;
+        this.numOfDependants = numOfDependants;
     }
 
     public String getName() {
@@ -35,7 +33,7 @@ public class Person {
         return married;
     }
 
-    public int getNumOfFamilyDependants() {
-        return numOfFamilyDependants;
+    public int getNumOfDependants() {
+        return numOfDependants;
     }
 }
