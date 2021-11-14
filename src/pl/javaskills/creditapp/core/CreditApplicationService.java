@@ -1,23 +1,39 @@
 package pl.javaskills.creditapp.core;
 
+import pl.javaskills.creditapp.core.model.CreditApplication;
 import pl.javaskills.creditapp.core.model.Person;
+
+import java.math.BigDecimal;
 
 public class CreditApplicationService {
 
-    public String getDecision(Person person) {
+    public String getDecision(CreditApplication creditApplication) {
+        Person person = creditApplication.getPerson();
         PersonScoringCalculator calculator = new PersonScoringCalculator();
         String decision;
-
-        if (calculator.calculate(person)< 300) {
+        int scoring = calculator.calculate(person);
+        if (scoring < 300) {
             decision = "Sorry " + person.getPersonalData().getName() + " " + person.getPersonalData().getLastName() + ", decision is negative";
+        } else if (scoring <= 400) {
+            decision = "Sorry " + person.getPersonalData().getName() + " " + person.getPersonalData().getLastName() + ",  bank requires additional documents. Our Consultant will contact you.";
+        } else {
+            double creditRate = person.getIncomePerFamilyMember() * 12 * creditApplication.getPurposeOfLoan().getPeriod();
+            switch (creditApplication.getPurposeOfLoan().getPurposeOfLoanType()) {
+                case PERSONAL_LOAN:
+                    creditRate *= Constants.PERSONAL_LOAN_LOAN_RATE;
+                    break;
+                case MORTGAGE:
+                    creditRate *= Constants.MORTGAGE_LOAN_RATE;
+                    break;
+            }
+            if (creditRate >= creditApplication.getPurposeOfLoan().getAmount()) {
+                decision = "Congratulations " + person.getPersonalData().getName() + " " + person.getPersonalData().getLastName() + ", decision is positive";
+            } else {
+                BigDecimal roundedCreditRate = new BigDecimal(creditRate).setScale(2);
+                decision = "Sorry, " + person.getPersonalData().getName() + " " + person.getPersonalData().getLastName() + ", decision is negative. Bank can borrow only " + roundedCreditRate;
 
-        }
-        else if (calculator.calculate(person) >= 300 && calculator.calculate(person) <= 400){
-            decision= "Sorry " + person.getPersonalData().getName() + " " + person.getPersonalData().getLastName() + ", bank req...";
+            }
 
-        }
-        else {
-            decision= "Congratulations " + person.getPersonalData().getName() + " " + person.getPersonalData().getLastName() + ", decision is positive";
         }
         return decision;
     }

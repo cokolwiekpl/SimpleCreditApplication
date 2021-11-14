@@ -3,12 +3,10 @@ package pl.javaskills.creditapp.core.model;
 public class Person {
     private final PersonalData personalData;
     private final ContactData contactData;
-    private final PurposeOfLoan purposeOfLoan;
 
-    public Person(PersonalData personalData, ContactData contactData, PurposeOfLoan purposeOfLoan) {
+    public Person(PersonalData personalData, ContactData contactData) {
         this.personalData = personalData;
         this.contactData = contactData;
-        this.purposeOfLoan = purposeOfLoan;
     }
 
     public PersonalData getPersonalData() {
@@ -17,5 +15,9 @@ public class Person {
 
     public ContactData getContactData() {
         return contactData;
+    }
+
+    public double getIncomePerFamilyMember(){
+        return this.getPersonalData().getTotalMonthlyIncomeInPln() / this.getPersonalData().getNumOfDependants();
     }
 }
