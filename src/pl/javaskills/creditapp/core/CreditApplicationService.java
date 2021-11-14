@@ -6,8 +6,19 @@ public class CreditApplicationService {
 
     public String getDecision(Person person) {
         PersonScoringCalculator calculator = new PersonScoringCalculator();
-        String decisionNegative = "Sorry " + person.getPersonalData().getName() + " " + person.getPersonalData().getLastName() + ", decision is negative";
-        String decisionPositive = "Congratulations " + person.getPersonalData().getName() + " " + person.getPersonalData().getLastName() + ", decision is positive";
-        return calculator.calculate(person) < 300 ? decisionNegative : decisionPositive;
+        String decision;
+
+        if (calculator.calculate(person)< 300) {
+            decision = "Sorry " + person.getPersonalData().getName() + " " + person.getPersonalData().getLastName() + ", decision is negative";
+
+        }
+        else if (calculator.calculate(person) >= 300 && calculator.calculate(person) <= 400){
+            decision= "Sorry " + person.getPersonalData().getName() + " " + person.getPersonalData().getLastName() + ", bank req...";
+
+        }
+        else {
+            decision= "Congratulations " + person.getPersonalData().getName() + " " + person.getPersonalData().getLastName() + ", decision is positive";
+        }
+        return decision;
     }
 }

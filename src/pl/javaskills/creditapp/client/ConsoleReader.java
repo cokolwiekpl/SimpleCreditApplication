@@ -36,9 +36,19 @@ public class ConsoleReader {
         System.out.println("Enter number of family dependants (including applicant):");
         int numOfDependant = in.nextInt();
 
+        System.out.println("What is purpose of loan? (MORTGAGE | PERSONAL_LOAN):");
+        PurposeOfLoanType type = PurposeOfLoanType.valueOf(in.next());
+
+        System.out.println("Enter loan amount:");
+        double amount = in.nextDouble();
+
+
+
+
         PersonalData personalData = new PersonalData(name, lastName, mothersMaidenName, income, maritalStatus, education, numOfDependant);
         ContactData contactData = new ContactData(email, phoneNumber);
+        PurposeOfLoan purposeOfLoan = new PurposeOfLoan(type, amount);
 
-        return new Person(personalData, contactData);
+        return new Person(personalData, contactData, purposeOfLoan);
     }
 }
